@@ -58,40 +58,15 @@ ip netns exec r0 ip addr add beef::254/64 dev veth2
 ip netns exec r0 ip addr add 10.0.2.254/24 dev veth2
 
 set +e
-read -r -d '' r0_env <<-EOF
-	# Set up a private BPF filesystem for this bash process.
-	# This mounts the BPF filesystem at /sys/fs/bpf.
-	# Note:
-	# - Child processes of this bash will have access to this instance of
-	#   the BPF filesystem.
-	# - If you need to access the same BPF filesystem (e.g., to interact
-	#   with BPF maps) from outside this process, use 'nsenter' with the '-m'
-	#   (mount namespace) and '-t' (target process ID) options, pointing to
-	#   the parent process's PID that launched this bash.
-	#
-	mount -t bpf bpf /sys/fs/bpf/
-	mkdir -p /sys/fs/bpf/netprog/{progs,maps}
-
-	mount -t tracefs nodev /sys/kernel/tracing
-
-        # It allows to load maps with many entries without failing
-        ulimit -l unlimited
-
-	# The command bpftool prog loadall netprog.bpf.o /sys/fs/bpf/netprog
-	# loads a BPF program from the object file netprog.bpf.o into the
-	# kernel and attaches it with the identifier or link name netprog,
-	# storing it in the specified BPF filesystem directory /sys/fs/bpf/.
-	bpftool prog \
-		loadall netprog.bpf.o /sys/fs/bpf/netprog/progs \
-		pinmaps /sys/fs/bpf/netprog/maps
-
-	# The command attaches an eBPF program pinned at
-	# /sys/fs/bpf/netprog/xdp_prog_drop_icmpv6 to the veth1 network
-	# interface using bpftool net attach xdp.
-	bpftool net attach xdp \
-		pinned /sys/fs/bpf/netprog/progs/xdp_prog_drop_icmpv6 dev veth1
-
-        /bin/bash
+read -r -d '' r0_env <<-EOF   
+set -x
+mount -t bpf bpf /sys/fs/bpf/
+mkdir -p /sys/fs/bpf/netprog/{progs,maps}
+mount -t tracefs nodev /sys/kernel/tracing
+ulimit -l unlimited
+bpftool prog loadall xdp_app_proto_cls.o /sys/fs/bpf/netprog/progs pinmaps /sys/fs/bpf/netprog/maps
+bpftool net attach xdp pinned /sys/fs/bpf/netprog/progs/xdp_app_proto_cls dev veth1
+/bin/bash
 EOF
 set -e
 
@@ -113,4 +88,18 @@ tmux new-window -t "${TMUX}" -n r0 ip netns exec r0 bash -c "${r0_env}"
 tmux new-window -t "${TMUX}" -n h1 ip netns exec h1 bash
 tmux select-window -t :0
 tmux set-option -g mouse on
+
+## اضافه کردن یک window برای نمایش آمار BPF
 tmux attach -t "${TMUX}"
+
+
+
+
+
+
+
+
+
+
+
+
