@@ -89,7 +89,7 @@ tmux new-window -t "${TMUX}" -n h1 ip netns exec h1 bash
 tmux select-window -t :0
 tmux set-option -g mouse on
 
-## اضافه کردن یک window برای نمایش آمار BPF
+
 tmux attach -t "${TMUX}"
 
 
