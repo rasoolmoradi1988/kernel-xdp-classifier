@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Project Overview
 
 This repository provides tools and resources for customizing and building a Linux kernel with a focus on packet filtering using the Netfilter subsystem. It also includes scripts and configurations for setting up a testing environment within virtual machines.
@@ -56,3 +57,6 @@ This repository is designed to facilitate customizing the Linux kernel, building
 ---
 
 *For further assistance or questions, refer to the individual README files within each folder.*
+=======
+# kernel-xdp-classifier
+>>>>>>> b75a627ff1fcf06dc03a895671fe3b381fe51cdf
