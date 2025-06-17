@@ -64,7 +64,7 @@ mount -t bpf bpf /sys/fs/bpf/
 mkdir -p /sys/fs/bpf/netprog/{progs,maps}
 mount -t tracefs nodev /sys/kernel/tracing
 ulimit -l unlimited
-bpftool prog loadall xdp_app_proto_cls.o /sys/fs/bpf/netprog/progs pinmaps /sys/fs/bpf/netprog/maps
+bpftool prog loadall xdp_app_proto_cls.bpf.o /sys/fs/bpf/netprog/progs pinmaps /sys/fs/bpf/netprog/maps
 bpftool net attach xdp pinned /sys/fs/bpf/netprog/progs/xdp_app_proto_cls dev veth1
 /bin/bash
 EOF
