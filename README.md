@@ -30,7 +30,10 @@ Includes scripts and configurations to set up a containerized environment for bu
 Contains:
 - `vm`: The root filesystem used by the virtual machine to run the guest OS with the custom kernel. It also includes scripts to build, run, and connect to the VM.
 - `scripts`: Collection of scripts for testing and various use cases within the VM environment.
-- How to get a test click on the URL in here to go to the readme file. https://docs.google.com/document/d/1MU2IGG9SVWA6ukaYmVVvU7D1ZRHNblvqsIe-PG2_6UE/edit?usp=sharing
+- font color="red">
+How to get a test click on the URL in here to go to the readme file.
+لینک زیر را ببینید:
+</font> https://docs.google.com/document/d/1MU2IGG9SVWA6ukaYmVVvU7D1ZRHNblvqsIe-PG2_6UE/edit?usp=sharing
 ---
 
 ## How to Get Started
